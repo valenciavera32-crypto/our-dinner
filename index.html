@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Our Dinner 💙</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #dff6ff, #9bdcff, #c8efff);
+            color: #123b5d;
+            text-align: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 60px 20px;
+        }
+
+        .heart {
+            font-size: 48px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        h1 {
+            font-size: 52px;
+            margin: 10px 0;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 19px;
+            color: #376b8c;
+            margin-bottom: 35px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 30px;
+
+            padding: 35px;
+            margin-top: 30px;
+
+            box-shadow: 0 15px 40px rgba(0, 90, 150, 0.15);
+
+            animation: appear 1s ease;
+        }
+
+        .card h2 {
+            font-size: 30px;
+            margin-top: 0;
+            color: #15577e;
+        }
+
+        .message {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #315b73;
+        }
+
+        /* PHOTO GALLERY */
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-top: 30px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            border-radius: 22px;
+
+            box-shadow: 0 8px 20px rgba(0, 80, 130, 0.18);
+
+            transition:
+                transform 0.4s ease,
+                box-shadow 0.4s ease;
+
+            cursor: pointer;
+        }
+
+        .gallery img:hover {
+            transform: translateY(-8px) scale(1.03);
+
+            box-shadow:
+                0 15px 30px rgba(0, 80, 130, 0.25);
+        }
+
+        /* DETAILS */
+
+        .details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 35px;
+        }
+
+        .detail-box {
+            background: rgba(220, 245, 255, 0.7);
+            border-radius: 20px;
+            padding: 20px 10px;
+            transition: 0.3s ease;
+        }
+
+        .detail-box:hover {
+            transform: translateY(-5px);
+            background: rgba(200, 240, 255, 0.9);
+        }
+
+        .detail-box span {
+            font-size: 28px;
+        }
+
+        .detail-box h3 {
+            margin: 10px 0 5px;
+            color: #15577e;
+        }
+
+        .detail-box p {
+            margin: 0;
+            color: #52758b;
+        }
+
+        /* OUR NIGHT */
+
+        .night {
+            margin-top: 40px;
+            padding: 25px;
+            border-radius: 22px;
+
+            background: linear-gradient(
+                135deg,
+                rgba(220, 247, 255, 0.8),
+                rgba(185, 232, 255, 0.8)
+            );
+        }
+
+        .night h2 {
+            margin-top: 0;
+            color: #15577e;
+        }
+
+        .night p {
+            line-height: 1.8;
+            color: #315b73;
+        }
+
+        /* PERSONAL NOTE */
+
+        .letter {
+            margin-top: 35px;
+            padding: 30px;
+
+            background: white;
+            border-radius: 25px;
+
+            border: 1px solid #ccefff;
+
+            box-shadow:
+                0 8px 25px rgba(0, 100, 160, 0.08);
+        }
+
+        .letter-heart {
+            font-size: 32px;
+        }
+
+        .letter h2 {
+            color: #15577e;
+            margin-bottom: 20px;
+        }
+
+        .letter p {
+            color: #456b80;
+            line-height: 1.9;
+            font-size: 17px;
+        }
+
+        .signature {
+            margin-top: 25px;
+            font-size: 18px;
+            font-style: italic;
+            color: #2879a8;
+        }
+
+        /* SMALL DECORATIONS */
+
+        .decoration {
+            position: fixed;
+            font-size: 25px;
+            opacity: 0.5;
+            animation: float 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .one {
+            top: 15%;
+            left: 8%;
+        }
+
+        .two {
+            top: 65%;
+            right: 8%;
+            animation-delay: 1s;
+        }
+
+        .three {
+            bottom: 10%;
+            left: 15%;
+            animation-delay: 2s;
+        }
+
+        /* ANIMATIONS */
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* PHOTO LIGHTBOX */
+
+        .lightbox {
+            display: none;
+
+            position: fixed;
+            z-index: 1000;
+
+            left: 0;
+            top: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background: rgba(10, 45, 70, 0.92);
+
+            justify-content: center;
+            align-items: center;
+
+            padding: 20px;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 85%;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 15px 50px rgba(0, 0, 0, 0.4);
+
+            animation: zoomIn 0.3s ease;
+        }
+
+        .close {
+            position: absolute;
+
+            top: 20px;
+            right: 35px;
+
+            color: white;
+
+            font-size: 50px;
+            font-weight: 300;
+
+            cursor: pointer;
+
+            line-height: 1;
+        }
+
+        .close:hover {
+            color: #9bdcff;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* PHONE */
+
+        @media (max-width: 700px) {
+
+            .container {
+                padding: 40px 15px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .subtitle {
+                font-size: 16px;
+            }
+
+            .card {
+                padding: 25px 18px;
+            }
+
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery img {
+                height: 300px;
+            }
+
+            .details {
+                grid-template-columns: 1fr;
+            }
+
+            .lightbox img {
+                max-width: 95%;
+                max-height: 80%;
+            }
+
+            .close {
+                top: 15px;
+                right: 20px;
+                font-size: 42px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- FLOATING DECORATIONS -->
+
+    <div class="decoration one">💙</div>
+    <div class="decoration two">✨</div>
+    <div class="decoration three">♡</div>
+
+
+    <div class="container">
+
+        <!-- HEADER -->
+
+        <div class="heart">💙</div>
+
+        <h1>Our Dinner Last Night</h1>
+
+        <p class="subtitle">
+            A little memory from a beautiful night together.
+        </p>
+
+
+        <!-- MAIN CARD -->
+
+        <div class="card">
+
+            <h2>Just Us ✨</h2>
+
+            <p class="message">
+                Last night was simple, but it was special.
+                Good food, good conversations, and time together.
+            </p>
+
+
+            <!-- OUR PHOTOS -->
+
+            <div class="gallery">
+
+                <img src="images/dinner1.jpeg" alt="Our dinner">
+
+                <img src="images/dinner2.jpeg" alt="Dinner together">
+
+                <img src="images/dinner3.jpeg" alt="A memory from last night">
+
+            </div>
+
+
+            <!-- DETAILS -->
+
+            <div class="details">
+
+                <div class="detail-box">
+                    <span>📅</span>
+                    <h3>Date</h3>
+                    <p>29/9/2026</p>
+                </div>
+
+                <div class="detail-box">
+                    <span>📍</span>
+                    <h3>Place</h3>
+                    <p>Koko Didi</p>
+                </div>
+
+                <div class="detail-box">
+                    <span>💙</span>
+                    <h3>With</h3>
+                    <p>Just You & Me</p>
+                </div>
+
+            </div>
+
+
+            <!-- OUR NIGHT -->
+
+            <div class="night">
+
+                <h2>Our Night ✨</h2>
+
+                <p>
+                    A quiet little night that became a memory
+                    I want to keep forever.
+                </p>
+
+            </div>
+
+
+            <!-- PERSONAL NOTE -->
+
+            <div class="letter">
+
+                <div class="letter-heart">💙</div>
+
+                <h2>A Little Note For You</h2>
+
+                <p>
+                    Thank you for making last night such a beautiful memory.
+                    It wasn't just about the food or the place.
+                    It was about being there together, laughing,
+                    talking, and enjoying the little moments.
+                </p>
+
+                <p>
+                    I hope we get to make many more memories like this together.
+                </p>
+
+                <div class="signature">
+                    — With love -v💙
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- PHOTO LIGHTBOX -->
+
+    <div id="lightbox" class="lightbox">
+
+        <span class="close">&times;</span>
+
+        <img id="lightbox-img" src="" alt="Large memory">
+
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        const galleryImages =
+            document.querySelectorAll(".gallery img");
+
+        const lightbox =
+            document.getElementById("lightbox");
+
+        const lightboxImg =
+            document.getElementById("lightbox-img");
+
+        const closeButton =
+            document.querySelector(".close");
+
+
+        // Open photo
+
+        galleryImages.forEach(function(image) {
+
+            image.addEventListener("click", function() {
+
+                lightbox.style.display = "flex";
+
+                lightboxImg.src = image.src;
+
+            });
+
+        });
+
+
+        // Close using X
+
+        closeButton.addEventListener("click", function() {
+
+            lightbox.style.display = "none";
+
+        });
+
+
+        // Close by clicking outside the photo
+
+        lightbox.addEventListener("click", function(event) {
+
+            if (event.target === lightbox) {
+
+                lightbox.style.display = "none";
+
+            }
+
+        });
+
+
+        // Close using ESC key
+
+        document.addEventListener("keydown", function(event) {
+
+            if (event.key === "Escape") {
+
+                lightbox.style.display = "none";
+
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>
